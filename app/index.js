@@ -8,7 +8,12 @@ import Home from './screens/Home';
 const App = () => <Home />;
 
 EStyleSheet.build({
-  // later on, global variables will reside here
+  $primaryColor: '#F44336',
+  $borderColor: '#424242',
+  $backgroundColor: '#212121',
+  $highlightColor: '#BDBDBD',
+  $textColor: '#FAFAFA',
+  $softTextColor: '#757575',
 });
 
 if (__DEV__) { activateKeepAwake(); }

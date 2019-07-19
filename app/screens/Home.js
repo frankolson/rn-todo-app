@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, StatusBar, View, Platform, Alert } from 'react-native';
 
 import Container from '../components/Container';
 import NewTaskButton from '../components/NewTaskButton';
@@ -19,20 +19,30 @@ class Home extends Component {
   }
 
   handleOpenNewTask = () => (
-    console.log('New task requested')
+    this.setState({ addingNewTask: true })
   )
 
   handleCloseNewTask = () => (
-    console.log('Done working with new task')
+    this.setState({ addingNewTask: false })
   )
 
-  handleToggleCompletion = () => (
-    console.log('Task completion toggled')
+  handleToggleCompletion = (id) => (
+    this.setState({
+      tasks: this.state.tasks.map(task => (
+        task.id === id ? { ...task, completed: !task.completed } : task
+      ))
+    }, () => saveTasks(this.state.tasks))
   )
 
-  handleDelete = () => (
-    console.log('Task deletion requested')
-  )
+  handleDelete = (id) => Alert.alert(
+    'Are you sure you want to delete this task?',
+    '',
+    [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Yes', onPress: () => this.deleteTask(id) }
+    ],
+    { cancelable: true },
+  );
 
   deleteTask = (id) => (
     this.setState({
@@ -60,6 +70,11 @@ class Home extends Component {
 
     return (
       <Container>
+        <StatusBar translucent={false} barStyle="light-content" />
+        <View
+          style={{ paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight }}
+        />
+
         {tasks.length ? (
           <TodoList
             tasks={tasks}

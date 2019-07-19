@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Container from '../components/Container';
 import NewTaskButton from '../components/NewTaskButton';
+import TodoList from '../components/TodoList';
+import NoTasks from '../components/NoTasks';
 import { getAllTasks, saveTasks } from '../utils/data';
 
 class Home extends Component {
@@ -15,6 +17,14 @@ class Home extends Component {
 
   handleOpenNewTask = () => (
     console.log('New task requested')
+  )
+
+  handleToggleCompletion = () => (
+    console.log('Task completion toggled')
+  )
+
+  handleDelete = () => (
+    console.log('Task deletion requested')
   )
 
   deleteTask = (id) => (
@@ -39,8 +49,20 @@ class Home extends Component {
   }
 
   render() {
+    const { tasks } = this.state;
+
     return (
       <Container>
+        {tasks.length ? (
+          <TodoList
+            tasks={tasks}
+            onPress={this.handleToggleCompletion}
+            onLongPress={this.handleDelete}
+          />
+        ) : (
+          <NoTasks />
+        )}
+
         <NewTaskButton
           onPress={this.handleOpenNewTask}
         />

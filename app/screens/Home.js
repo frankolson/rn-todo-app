@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import { KeyboardAvoidingView } from 'react-native';
 
 import Container from '../components/Container';
 import NewTaskButton from '../components/NewTaskButton';
 import TodoList from '../components/TodoList';
 import NoTasks from '../components/NoTasks';
+import NewTaskInput from '../components/NewTaskInput';
 import { getAllTasks, saveTasks } from '../utils/data';
 
 class Home extends Component {
   state = {
+    addingNewTask: false,
     tasks: [],
   }
 
@@ -17,6 +20,10 @@ class Home extends Component {
 
   handleOpenNewTask = () => (
     console.log('New task requested')
+  )
+
+  handleCloseNewTask = () => (
+    console.log('Done working with new task')
   )
 
   handleToggleCompletion = () => (
@@ -37,7 +44,7 @@ class Home extends Component {
   );
 
   addTask = (input) => {
-    const { tasks } = this.state;
+    const { addingNewTask, tasks } = this.state;
 
     this.setState({
       tasks: [
@@ -49,7 +56,7 @@ class Home extends Component {
   }
 
   render() {
-    const { tasks } = this.state;
+    const { addingNewTask, tasks } = this.state;
 
     return (
       <Container>
@@ -63,9 +70,16 @@ class Home extends Component {
           <NoTasks />
         )}
 
-        <NewTaskButton
-          onPress={this.handleOpenNewTask}
-        />
+        {!addingNewTask && <NewTaskButton onPress={this.handleOpenNewTask} />}
+
+        {addingNewTask && (
+          <KeyboardAvoidingView behavior="padding">
+            <NewTaskInput
+              onSubmitEditing={this.addTask}
+              onEndEditing={this.handleCloseNewTask}
+            />
+          </KeyboardAvoidingView>
+        )}
       </Container>
     );
   }

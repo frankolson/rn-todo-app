@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, TextInput, View, Platform, Keyboard } from 'react-native';
+import { TouchableOpacity, TextInput, View, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -34,9 +34,9 @@ class NewTaskInput extends Component {
 
         <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
           <Ionicons
-            name={`${ICON_PREFIX}-send`}
             size={28}
             color={styles.$iconColor}
+            name={`${ICON_PREFIX}-send`}
           />
         </TouchableOpacity>
       </View>

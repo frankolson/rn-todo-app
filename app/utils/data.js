@@ -1,26 +1,17 @@
 import { AsyncStorage } from 'react-native';
 
-function getAllTasks(callback) {
+export function saveTasks(tasks) {
+  AsyncStorage.setItem('TASKS', JSON.stringify(tasks));
+}
+
+export function getAllTasks(callback) {
   return AsyncStorage.getItem('TASKS', (err, tasks) =>
-    convertToArrayOfObject(tasks, callback)
+    convertToArrayOfObjects(tasks, callback)
   );
 }
 
-function saveTasks(tasks) {
-  AsyncStorage.setItem('TASKS', convertToStringWithSeparators(tasks));
-}
-
-function convertToArrayOfObject(tasks, callback) {
+function convertToArrayOfObjects(tasks, callback) {
   return callback(
-    tasks ? JSON.parse(tasks).map((task, i) => ({ id: i.toString(), ...task })) : []
+    tasks ? JSON.parse(tasks).map((task, id) => ({ id, ...task })) : []
   );
 }
-
-function convertToStringWithSeparators(tasks) {
-  return JSON.stringify(tasks.map(({ id, ...rest }) => rest));
-}
-
-export {
-  getAllTasks,
-  saveTasks,
-};

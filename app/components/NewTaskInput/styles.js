@@ -4,8 +4,8 @@ export default EStyleSheet.create({
   $iconColor: '$textColor',
 
   container: {
-    alignItems: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '$softTextColor',
   },
   input: {

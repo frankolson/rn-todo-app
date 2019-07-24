@@ -39,7 +39,7 @@ Task.propTypes = {
   onPress: PropTypes.func.isRequired,
   onLongPress: PropTypes.func.isRequired,
   task: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     completed: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,

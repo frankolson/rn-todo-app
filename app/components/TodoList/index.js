@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 
-import Task from '../Task';
+import Task from './Task';
 import Separator from './Separator';
 import styles from './styles';
 
@@ -17,7 +17,7 @@ const TodoList = ({ onPress, onLongPress, tasks }) => (
         task={item}
       />
     )}
-    keyExtractor={item => item.id}
+    keyExtractor={item => item.id.toString()}
     ItemSeparatorComponent={Separator}
   />
 );
@@ -27,7 +27,7 @@ TodoList.propTypes = {
   onLongPress: PropTypes.func.isRequired,
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       completed: PropTypes.bool.isRequired,
       name: PropTypes.string.isRequired,
     }).isRequired

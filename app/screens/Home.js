@@ -8,6 +8,13 @@ import NoTasks from '../components/NoTasks';
 import NewTaskInput from '../components/NewTaskInput';
 import { getAllTasks, saveTasks } from '../utils/data';
 
+const testData = [
+  { id: '1', name: 'feed the puppy', completed: false },
+  { id: '2', name: 'take out the trash', completed: true },
+  { id: '3', name: 'make breakfast', completed: false },
+  { id: '4', name: 'brush teeth', completed: false },
+]
+
 class Home extends Component {
   state = {
     addingNewTask: false,
@@ -15,6 +22,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    // saveTasks(testData)
     getAllTasks(tasks => this.setState({ tasks: tasks || [] }));
   }
 
@@ -54,12 +62,12 @@ class Home extends Component {
   );
 
   addTask = (input) => {
-    const { addingNewTask, tasks } = this.state;
+    const { tasks } = this.state;
 
     this.setState({
       tasks: [
         ...tasks,
-        { id: (tasks.length + 1).toString(), completed: false, name: input }
+        { id: (tasks.length + 1), completed: false, name: input }
       ],
       addingNewTask: false,
     }, () => saveTasks(this.state.tasks))
